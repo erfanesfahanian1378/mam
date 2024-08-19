@@ -1,0 +1,223 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--  <head>-->
+<!--    <meta charset="UTF-8" />-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+<!--    <title>Crypto Win Rate Scanner</title>-->
+<!--    <link rel="stylesheet" href="css/win-rate.css" />-->
+<!--  </head>-->
+<!--  <body>-->
+<!--    <div class="container">-->
+<!--      <h1>Crypto Win Rate Scanner</h1>-->
+<!--      <form id="csvUploadForm">-->
+<!--        <div class="inner">-->
+<!--          <label for="min-win-rate">Minimum Win Rate:</label>-->
+<!--          <input type="number" id="min-win-rate" name="minWinRate" required />-->
+<!--        </div>-->
+<!--        <div class="inner">-->
+<!--          <label for="min-projects">Minimum Projects:</label>-->
+<!--          <input type="number" id="min-projects" name="minProjects" required />-->
+<!--        </div>-->
+<!--        <div class="inner">-->
+<!--          <label for="roi">ROI:</label>-->
+<!--          <input type="number" id="roi" name="roi" step="0.01" required />-->
+<!--        </div>-->
+<!--        <div class="inner">-->
+<!--          <label for="helius-api">Helius API:</label>-->
+<!--          <input type="text" id="helius-api" name="heliusApi" required />-->
+<!--        </div>-->
+<!--        <div class="inner">-->
+<!--          <label for="csvFile" class="file-upload-label">-->
+<!--            <input-->
+<!--              type="file"-->
+<!--              id="csvFile"-->
+<!--              name="csvFile"-->
+<!--              accept=".csv"-->
+<!--              required-->
+<!--            />-->
+<!--            Upload-->
+<!--          </label>-->
+<!--        </div>-->
+
+<!--        <button type="submit">Submit</button>-->
+<!--      </form>-->
+<!--      <table id="dataTable">-->
+<!--        <thead>-->
+<!--          <tr>-->
+<!--            <th>Address</th>-->
+<!--            <th>Win Rate</th>-->
+<!--          </tr>-->
+<!--        </thead>-->
+<!--        <tbody></tbody>-->
+<!--      </table>-->
+<!--    </div>-->
+<!--    <script src="js/win-rate.js"></script>-->
+<!--    <script src="js/update-table.js"></script>-->
+<!--  </body>-->
+<!--</html>-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crypto Win Rate Scanner</title>
+  <link rel="stylesheet" href="css/win-rate.css" />
+</head>
+<body>
+<div class="container">
+  <h1>Crypto Win Rate Scanner</h1>
+  <form id="csvUploadForm">
+    <div class="inner">
+      <label for="min-win-rate">Minimum Win Rate:</label>
+      <input type="number" id="min-win-rate" name="minWinRate" required />
+    </div>
+    <div class="inner">
+      <label for="min-projects">Minimum Projects:</label>
+      <input type="number" id="min-projects" name="minProjects" required />
+    </div>
+    <div class="inner">
+      <label for="roi">ROI:</label>
+      <input type="number" id="roi" name="roi" step="0.01" required />
+    </div>
+    <div class="inner">
+      <label for="helius-api">Helius API:</label>
+      <input type="text" id="helius-api" name="heliusApi" required />
+    </div>
+    <div class="inner">
+      <label for="day">Day:</label>
+      <input type="text" id="day" name="day" required />
+    </div>
+    <div id="progress">
+      <h2>Process Progress</h2>
+      <p id="progress-text">0 / 40 processes completed</p>
+    </div>
+<!--    <button id="cancel-button" class="cancel" >Cancel All Processes</button>-->
+    <div class="inner">
+      <label for="csvFile" class="file-upload-label">
+        <input
+                type="file"
+                id="csvFile"
+                name="csvFile"
+                accept=".csv"
+                required
+        />
+        Upload
+      </label>
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>
+  <table id="dataTable">
+    <thead>
+    <tr>
+      <th>Address</th>
+      <th>Win Rate</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+<script src="js/win-rate.js"></script>
+<script src="js/update-table.js"></script>
+<script>
+  const progressText = document.getElementById('progress-text');
+  const socket = new WebSocket('ws://localhost:8090');
+
+
+  socket.addEventListener('message', function (event) {
+    const data = JSON.parse(event.data);
+    progressText.textContent = `${data.completed} / ${data.total} processes completed`;
+  });
+</script>
+</body>
+</html>
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8" />-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+<!--  <title>Crypto Win Rate Scanner</title>-->
+<!--  <link rel="stylesheet" href="css/win-rate.css" />-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--  <h1>Crypto Win Rate Scanner</h1>-->
+<!--  <form id="csvUploadForm">-->
+<!--    <div class="inner">-->
+<!--      <label for="min-win-rate">Minimum Win Rate:</label>-->
+<!--      <input type="number" id="min-win-rate" name="minWinRate" required />-->
+<!--    </div>-->
+<!--    <div class="inner">-->
+<!--      <label for="min-projects">Minimum Projects:</label>-->
+<!--      <input type="number" id="min-projects" name="minProjects" required />-->
+<!--    </div>-->
+<!--    <div class="inner">-->
+<!--      <label for="roi">ROI:</label>-->
+<!--      <input type="number" id="roi" name="roi" step="0.01" required />-->
+<!--    </div>-->
+<!--    <div class="inner">-->
+<!--      <label for="helius-api">Helius API:</label>-->
+<!--      <input type="text" id="helius-api" name="heliusApi" required />-->
+<!--    </div>-->
+<!--    <div class="inner">-->
+<!--      <label for="csvFile" class="file-upload-label">-->
+<!--        <input-->
+<!--                type="file"-->
+<!--                id="csvFile"-->
+<!--                name="csvFile"-->
+<!--                accept=".csv"-->
+<!--                required-->
+<!--        />-->
+<!--        Upload-->
+<!--      </label>-->
+<!--    </div>-->
+
+<!--    <button type="submit">Submit</button>-->
+<!--  </form>-->
+<!--  <table id="dataTable">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th>Address</th>-->
+<!--      <th>Win Rate</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody></tbody>-->
+<!--  </table>-->
+
+<!--  &lt;!&ndash; Progress section &ndash;&gt;-->
+<!--  <div id="progress">-->
+<!--    <h2>Process Progress</h2>-->
+<!--    <p id="progress-text">0 / 40 processes completed</p>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Cancel Button &ndash;&gt;-->
+<!--  <button id="cancel-button">Cancel All Processes</button>-->
+<!--</div>-->
+
+<!--<script src="js/win-rate.js"></script>-->
+<!--<script src="js/update-table.js"></script>-->
+<!--<script>-->
+<!--  const progressText = document.getElementById('progress-text');-->
+<!--  const cancelButton = document.getElementById('cancel-button');-->
+<!--  const socket = new WebSocket('ws://localhost:8080');-->
+
+<!--  // Update progress text when receiving messages from the server-->
+<!--  socket.addEventListener('message', function (event) {-->
+<!--    const data = JSON.parse(event.data);-->
+<!--    progressText.textContent = `${data.completed} / ${data.total} processes completed`;-->
+<!--  });-->
+
+<!--  // Send cancel message to the server when the cancel button is clicked-->
+<!--  cancelButton.addEventListener('click', function () {-->
+<!--    socket.send('cancel');-->
+<!--    progressText.textContent = 'Cancelling processes...';-->
+<!--  });-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
