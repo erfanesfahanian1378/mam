@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:22.6.0
 # Import a Node.js image that runs on top of an Alpine image.
 RUN mkdir -p /home/app
 # This command will create a subdirectory called "app" in the /home directory of the Alpine image.
